@@ -1,216 +1,277 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Tools Hub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. NAMK | Public Mutual Fund Performance</title>
+    <style>
+        :root {
+            --primary-color: #0d233a; /* Deep corporate navy */
+            --accent-color: #cca43b;  /* Premium gold accent */
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --positive-green: #2ecc71;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: #0f172a;
-  color: white;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
 
-/* NAV */
-.nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background: #020617;
-}
+        /* Header Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-color);
+        }
 
-.nav input {
-  padding: 8px;
-  border-radius: 6px;
-  border: none;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
+        .logo span {
+            color: var(--accent-color);
+        }
 
-/* FILTER */
-.filters {
-  text-align: center;
-  margin: 20px;
-}
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
 
-.filters button {
-  margin: 5px;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-}
+        nav a:hover {
+            color: var(--accent-color);
+        }
 
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 20px;
-  padding: 20px;
-}
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(rgba(13, 35, 58, 0.85), rgba(13, 35, 58, 0.95)), 
+                        url('https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+        }
 
-.card {
-  background: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
 
-.card:hover {
-  transform: scale(1.05);
-  background: #ff6600;
-}
+        .hero p {
+            color: #b0c4de;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-/* TAG */
-.tag {
-  font-size: 12px;
-  opacity: 0.7;
-}
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-/* MODAL */
-.modal {
-  display: none;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.8);
-}
+        /* Highlights Section */
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding-left: 10px;
+        }
 
-.modal-content {
-  background: #111;
-  margin: 10% auto;
-  padding: 25px;
-  width: 90%;
-  max-width: 500px;
-  border-radius: 10px;
-}
+        /* Performance Data Table */
+        .table-responsive {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow-x: auto;
+            margin-bottom: 40px;
+        }
 
-.close {
-  float: right;
-  cursor: pointer;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
 
-.btn {
-  display: inline-block;
-  margin-top: 15px;
-  background: #ff6600;
-  padding: 10px 20px;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
-</style>
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
 
-<script>
-let currentFilter = "all";
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eef2f5;
+            font-size: 15px;
+        }
 
-function filterTools(category) {
-  currentFilter = category;
-  displayTools();
-}
+        tr:hover {
+            background-color: #f9fbfd;
+        }
 
-function searchTools() {
-  displayTools();
-}
+        .badge-award {
+            background-color: #fff4d4;
+            color: #b08200;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
 
-function displayTools() {
-  let search = document.getElementById("search").value.toLowerCase();
-  let cards = document.querySelectorAll(".card");
+        .return-positive {
+            color: var(--positive-green);
+            font-weight: bold;
+        }
 
-  cards.forEach(card => {
-    let name = card.dataset.name.toLowerCase();
-    let cat = card.dataset.category;
+        /* Disclaimer Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: #888888;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 12px;
+            margin-top: 60px;
+        }
 
-    if ((currentFilter === "all" || cat === currentFilter) && name.includes(search)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
-  });
-}
+        footer p {
+            max-width: 800px;
+            margin: 0 auto 10px;
+            line-height: 1.8;
+        }
 
-function openModal(id){
-  document.getElementById(id).style.display = "block";
-}
-
-function closeModal(id){
-  document.getElementById(id).style.display = "none";
-}
-</script>
-
+        footer .credits {
+            color: var(--accent-color);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="nav">
-  <div><b>AI Tools Hub</b></div>
-  <input id="search" onkeyup="searchTools()" placeholder="Search AI tools...">
-</div>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">Mr.<span>NAMK</span></div>
+        <nav>
+            <a href="#">Dashboard</a>
+            <a href="https://www.publicmutual.com.my" target="_blank">Official Public Mutual</a>
+        </nav>
+    </header>
 
-<div class="hero">
-  <h1>Top AI Tools 2026 🚀</h1>
-  <p>Cari, belajar & guna AI tools terbaik</p>
-</div>
+    <!-- Banner Headline -->
+    <section class="hero">
+        <h1>Public Mutual Fund Performance Insights</h1>
+        <p>Curated market insights and historical performance tracking across key award-winning unit trust funds.</p>
+    </section>
 
-<div class="filters">
-  <button onclick="filterTools('all')">All</button>
-  <button onclick="filterTools('writing')">Writing</button>
-  <button onclick="filterTools('design')">Design</button>
-  <button onclick="filterTools('video')">Video</button>
-  <button onclick="filterTools('productivity')">Productivity</button>
-</div>
+    <!-- Main Content Area -->
+    <div class="container">
+        
+        <h2 class="section-title">Lipper Fund Awards Focus</h2>
+        
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fund Name</th>
+                        <th>Fund Classification Type</th>
+                        <th>Key Performance Period</th>
+                        <th>Accolade / Recognition</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Public Lifestyle & Technology Fund</strong></td>
+                        <td>Equity Global</td>
+                        <td>3-Year Horizon</td>
+                        <td><span class="badge-award">Lipper Group Winner</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Public e-Islamic Sustainable Millennial Fund</strong></td>
+                        <td>Equity Global (Shariah)</td>
+                        <td>5-Year Horizon</td>
+                        <td><span class="badge-award">Lipper Group Winner</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Public Asia Pacific Focus Fund</strong></td>
+                        <td>Equity Asia Pacific</td>
+                        <td>3-Year Horizon</td>
+                        <td><span class="badge-award">Lipper Group Winner</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Public Islamic Asia Tactical Allocation Fund</strong></td>
+                        <td>Mixed Asset Flexible</td>
+                        <td>3-Year Horizon</td>
+                        <td><span class="badge-award">Lipper Group Winner</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Public Enhanced Bond Fund</strong></td>
+                        <td>Mixed Asset Conservative</td>
+                        <td>5-Year Horizon</td>
+                        <td><span class="badge-award">Lipper Group Winner</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-<div class="grid">
+        <h2 class="section-title">Long-Term PRS Performance Standouts</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Private Retirement Scheme (PRS) Fund</th>
+                        <th>Asset Mix Category</th>
+                        <th>5-Year Annualised Return (p.a.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Public Mutual PRS Islamic Strategic Equity</td>
+                        <td>Aggressive Allocation (Shariah)</td>
+                        <td class="return-positive">+11.11%</td>
+                    </tr>
+                    <tr>
+                        <td>Public Mutual PRS Islamic Growth</td>
+                        <td>Aggressive Allocation</td>
+                        <td class="return-positive">+8.93%</td>
+                    </tr>
+                    <tr>
+                        <td>Public Mutual PRS Moderate</td>
+                        <td>Balanced Mix Assets</td>
+                        <td class="return-positive">+8.09%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-  <div class="card" data-name="ChatGPT" data-category="writing" onclick="openModal('chatgpt')">
-    ChatGPT<br><span class="tag">Writing</span>
-  </div>
+    </div>
 
-  <div class="card" data-name="Canva AI" data-category="design" onclick="openModal('canva')">
-    Canva AI<br><span class="tag">Design</span>
-  </div>
-
-  <div class="card" data-name="Grammarly" data-category="writing" onclick="openModal('grammarly')">
-    Grammarly<br><span class="tag">Writing</span>
-  </div>
-
-  <div class="card" data-name="Runway ML" data-category="video" onclick="openModal('runway')">
-    Runway ML<br><span class="tag">Video</span>
-  </div>
-
-  <div class="card" data-name="Notion AI" data-category="productivity" onclick="openModal('notion')">
-    Notion AI<br><span class="tag">Productivity</span>
-  </div>
-
-</div>
-
-<!-- MODAL EXAMPLE -->
-<div id="chatgpt" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('chatgpt')">X</span>
-    <h2>ChatGPT</h2>
-    <p>AI chatbot untuk bantu kerja, idea & content.</p>
-    <a class="btn" href="https://chat.openai.com">Try Now</a>
-  </div>
-</div>
-
-<div id="canva" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('canva')">X</span>
-    <h2>Canva AI</h2>
-    <p>Design content dengan AI.</p>
-    <a class="btn" href="https://canva.com">Try Now</a>
-  </div>
-</div>
+    <!-- Legal Disclaimer & Author Footer -->
+    <footer>
+        <p><strong>Disclaimer:</strong> Past performance is not a reliable indicator of future performance. Investments in unit trust funds are subject to market risks, including the potential loss of principal. Users are advised to read and understand the relevant Fund Prospectus and Product Highlights Sheet (PHS) before making investment decisions.</p>
+        <p class="credits">Managed & Maintained by <strong>Mr. NAMK</strong></p>
+    </footer>
 
 </body>
 </html>
